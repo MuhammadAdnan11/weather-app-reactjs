@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "./Weather.css"
 import search_icon from "../assets/search.png"
 import clear_icon from "../assets/clear.png"
@@ -10,7 +10,7 @@ import wind_icon from "../assets/wind.png"
 import humidity_icon from "../assets/humidity.png"
 
 const Weather = () => {
-
+const inputRef=useRef();
   const [weatherData, setWeatherData]=useState(false);
 
   const allIcons={
@@ -31,11 +31,19 @@ const Weather = () => {
   }
 
   const search=async(city)=>{
+    if(inputRef==""){
+      alert("Enter the data")
+    }
     try {
       const url=`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
 
       const response=await fetch(url);
       const data=await response.json();
+      if(!response.ok){
+        alert(data.message)
+       
+        return;
+      }
       const icon=allIcons[data.weather[0].icon] || clear_icon;
       setWeatherData({
         humidity: data.main.humidity,
@@ -45,7 +53,8 @@ const Weather = () => {
         icon: icon
       })
     } catch (error) {
-      
+      setWeatherData(false);
+      console.error("Error in fetching weather data")
     }
   }
   useEffect(()=>{
@@ -55,10 +64,10 @@ const Weather = () => {
   return (
     <div className='weather'>
      <div className='search-bar'>
-      <input type='text' placeholder='Search'></input>
-      <img src={search_icon}></img>
+      <input ref={inputRef} placeholder='Search'></input>
+      <img src={search_icon} onClick={()=>search(inputRef.current.value)}></img>
      </div>
-     <img src={weatherData.icon}alt='' className='weather-icon'/>
+     {weatherData?<><img src={weatherData.icon}alt='' className='weather-icon'/>
      <p className='temperature'>{weatherData.temperature}c</p>
      <p className='location'>{weatherData.location}</p>
      <div className='weather-data'>
@@ -76,7 +85,8 @@ const Weather = () => {
           <span>Wind Speed</span>
         </div>
       </div>
-     </div>
+     </div></>:<></>}
+     
     </div>
   )
 }

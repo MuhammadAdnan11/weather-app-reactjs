@@ -2,7 +2,12 @@
     place-self: center;
     padding: 40px;
     border-radius: 10px;
-    background-image: linear-gradient(45deg, #2f4680, #500ae4);
+    /* background-image: linear-gradient(45deg, #2f4680, #500ae4); */
+    /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
+    /* background-image: linear-gradient(to right, #92fe9d 0%, #00c9ff 100%); */
+    background-image: linear-gradient(-20deg, #d558c8 0%, #24d292 100%);
+    background-position: cover;
+    background-repeat: no-repeat;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;

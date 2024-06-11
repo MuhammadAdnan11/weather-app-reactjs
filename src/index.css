@@ -9,5 +9,8 @@
 .app{
   min-height: 100vh;
   display: grid;
-  background: #e2d4ff;
+  /* background: #e2d4ff; */
+  background-image: url(../src/assets/weather3.jpg);
+  background-repeat: no-repeat;
+  background-size:auto;
 }
